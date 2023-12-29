@@ -51,20 +51,20 @@ namespace Microsoft.AspNetCore.Hosting
             var settings = new SejilSettings(url, IWebHostBuilderExtensions.MapSerilogLogLevel(minLogLevel));
 
             return builder
-                .UseSerilog((context, cfg) =>
-                {
-                    cfg
-                        .Enrich.FromLogContext()
-                        .ReadFrom.Configuration(context.Configuration)
-                        .MinimumLevel.ControlledBy(settings.LoggingLevelSwitch)
-                        .WriteTo.Sejil(settings);
-                    sinks?.Invoke(cfg.WriteTo);
-                }, writeToProviders: writeToProviders)
+                // .UseSerilog((context, cfg) =>
+                // {
+                //     cfg
+                //         .Enrich.FromLogContext()
+                //         .ReadFrom.Configuration(context.Configuration)
+                //         .MinimumLevel.ControlledBy(settings.LoggingLevelSwitch)
+                //         .WriteTo.Sejil(settings);
+                //     sinks?.Invoke(cfg.WriteTo);
+                // }, writeToProviders: writeToProviders)
                 .ConfigureServices((_, services) =>
                 {
                     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
                     services.AddSingleton<ISejilSettings>(settings);
-                    services.AddScoped<ISejilRepository, SejilRepository>();
+                    services.AddScoped<ISejilRepository, LogliRepository>();
                     services.AddScoped<ISejilSqlProvider, SejilSqlProvider>();
                     services.AddScoped<ISejilController, SejilController>();
                 });

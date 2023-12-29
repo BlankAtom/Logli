@@ -42,6 +42,7 @@ namespace Sejil.Models.Internal
 
                 spans.Add(new TextSpan
                 {
+                    Kind = "str",
                     Text = section,
                 });
 
